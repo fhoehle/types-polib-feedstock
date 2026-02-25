@@ -1,0 +1,44 @@
+schema_version: 1
+
+context:
+  name: types-polib
+  version: 1.2.0.20250401
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name | replace('-', '_') }}-${{ version }}.tar.gz
+  sha256: 0a7d2cc4918680925c43ccd604c561933d98fb79a8e6dc3f6de433189c9d606d
+
+build:
+  number: 0
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - python >=${{ python_min }}
+    - setuptools
+    - pip
+  run:
+    - python >=${{ python_min }}
+
+tests:
+  - script:
+
+  - package_contents:
+      site_packages:
+        - polib-stubs/__init__.pyi
+
+about:
+  summary: Typing stubs for polib
+  license: Apache-2.0 AND MIT
+  license_file: LICENSE
+  homepage: https://github.com/python/typeshed
+
+extra:
+  recipe-maintainers:
+    - fhoehle
+    - conda-forge/mypy
